@@ -117,5 +117,41 @@ Armazena todas as informações de:
 
 Para acessar o painel admin, é preciso um usuário superuser, criado via comando:
 
-```bash
-python manage.py createsuperuser
+Como rodar o projeto localmente
+
+## passo a passo pra iniciar o projeto
+
+Clone o repositório:
+git clone <URL_DO_REPOSITORIO>
+
+Crie e ative um ambiente virtual:
+
+python -m venv .venv
+# Windows
+.\.venv\Scripts\activate
+# Linux / MacOS
+source .venv/bin/activate
+
+
+Instale as dependências:
+pip install -r requirements.txt
+
+Rode as migrações do banco:
+python manage.py migrate
+
+Rode o servidor de desenvolvimento:
+python manage.py runserver
+
+
+Acesse:
+
+Página pública: http://127.0.0.1:8000/
+
+Painel admin: http://127.0.0.1:8000/admin/
+
+
+
+
+
+
+
