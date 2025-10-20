@@ -1,0 +1,46 @@
+{% extends 'sales/base.html' %}
+{% block content %}
+<h2>Vendas</h2>
+<form method="get">
+  De: <input type="date" name="start_date" value="{{ start }}">
+  Até: <input type="date" name="end_date" value="{{ end }}">
+  Produto: <input type="text" name="product" value="{{ product_q }}">
+  <button type="submit">Filtrar</button>
+</form>
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr><th>Data</th><th>Produto</th><th>Quantidade</th><th>Preço</th><th>Total</th></tr>
+  </thead>
+  <tbody>
+    {% for s in sales %}
+    <tr>
+      <td>{{ s.date }}</td>
+      <td>{{ s.product.name }}</td>
+      <td>{{ s.quantity }}</td>
+      <td>{{ s.price }}</td>
+      <td>{{ s.total }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">Nenhuma venda encontrada.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h3>Gráfico: Quantidade por produto</h3>
+<canvas id="chartTotals" width="600" height="300"></canvas>
+<script>
+  const totals = {{ totals|safe }};
+  const labels = totals.map(x => x['product__name']);
+  const data = totals.map(x => x['total']);
+  const ctx = document.getElementById('chartTotals').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Quantidade vendida',
+        data: data,
+      }]
+    },
+  });
+</script>
+{% endblock %}
